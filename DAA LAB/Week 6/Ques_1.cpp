@@ -49,3 +49,60 @@ int main()
     return 0;
 
 }
+
+//By adjacency list 
+
+#include<bits/stdc++.h>
+using namespace std;
+
+bool find_path_dfs(int src,int des,vector<int>adj[],vector<int>&visited)
+{
+    if(src==des)
+    {
+        return true;
+    }    
+    visited[src]=1;
+    bool ans;
+    for(auto child :adj[src])
+    {
+        
+        if(visited[child]!=1)
+        {
+            ans|=find_path_dfs(child,des,adj,visited);
+        }
+    }
+    visited[src]=0;
+    return ans;
+}
+
+
+
+
+int main()
+{
+    int n,m;
+    cin>>n>>m;
+    vector<int>adj[n];
+    vector<int>visited(n,0);
+    for(int i=0;i<m;i++)
+    {
+        int v1,v2;
+        cin>>v1>>v2;
+        adj[v1].push_back(v2);
+        //adj[v2].push_back(v1);
+    }
+
+    int src,des;
+    cin>>src>>des;
+
+    if(find_path_dfs(src,des,adj,visited))
+    cout<<"Yes path exists ";
+    else
+    cout<<"No path doesn't exists ";
+
+    return 0;
+
+}
+
+
+
